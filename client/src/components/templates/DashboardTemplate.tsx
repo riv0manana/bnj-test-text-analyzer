@@ -20,7 +20,7 @@ export function DashboardTemplate({
     <div className="flex h-screen w-full flex-col items-center bg-background p-4 md:p-8">
       <div className="w-full max-w-3xl flex-1 flex flex-col">
         <h1 className="text-3xl font-bold mb-6 text-center">Text Analyzer</h1>
-        <span>riv0manana.dev (Test - BNJ Team Maker)</span>
+        <span className="text-center">riv0manana.dev (Test - BNJ Team Maker)</span>
 
         <Tabs defaultValue="chat" className="flex-1 flex flex-col h-full">
           <TabsList className="grid w-full grid-cols-2 mb-4">
