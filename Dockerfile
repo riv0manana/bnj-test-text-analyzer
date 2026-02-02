@@ -36,9 +36,9 @@ ENV NODE_ENV=production
 # Copy server package.json for dependency installation
 COPY server/package.json ./server/
 
-# Install only production dependencies for the server
+# Install dependencies for the server
 WORKDIR /app/server
-RUN npm install
+RUN npm install --include=dev
 
 # Copy built artifacts from builder
 COPY --from=builder /app/client/dist ../client/dist
