@@ -18,12 +18,12 @@ COPY client ./client
 COPY server ./server
 
 # Build frontend and backend
-# This will also generate the prisma/drizzle artifacts if configured in the build script
 RUN npm run build
 
-# Generate Drizzle migrations
+# Run Drizzle migrations
 WORKDIR /app/server
-RUN npm run db:generate
+# Migrate db
+RUN npm run db:migrate
 
 # Stage 2: Production Runner
 FROM node:20-alpine AS runner
@@ -38,7 +38,7 @@ COPY server/package.json ./server/
 
 # Install only production dependencies for the server
 WORKDIR /app/server
-RUN npm install --omit=dev
+RUN npm install
 
 # Copy built artifacts from builder
 COPY --from=builder /app/client/dist ../client/dist
