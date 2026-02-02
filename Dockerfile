@@ -20,10 +20,6 @@ COPY server ./server
 # Build frontend and backend
 RUN npm run build
 
-# Run Drizzle migrations
-WORKDIR /app/server
-# Migrate db
-RUN npm run db:migrate
 
 # Stage 2: Production Runner
 FROM node:20-alpine AS runner
@@ -43,10 +39,13 @@ RUN npm install --include=dev
 # Copy built artifacts from builder
 COPY --from=builder /app/client/dist ../client/dist
 COPY --from=builder /app/server/dist ./dist
-COPY --from=builder /app/server/drizzle ./drizzle
+# Copy drizzle config and migrations
+COPY server/drizzle.config.ts .
+COPY server/src/core/infra/repository/db/drizzle ./src/core/infra/repository/db/drizzle
+COPY server/src/core/infra/repository/db/schema.ts ./src/core/infra/repository/db/schema.ts
 
 # Expose the port
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "dist/index.js"]
+CMD ["sh", "-c", "npm run db:migrate && node dist/index.js"]
