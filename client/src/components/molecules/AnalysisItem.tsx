@@ -8,7 +8,7 @@ export function AnalysisItem({ item }: AnalysisItemProps) {
   return (
     <div className="flex items-center justify-between p-4 border rounded-lg bg-card hover:bg-accent/50 transition-colors">
       <div className="flex-1 min-w-0 mr-4">
-        <p className="font-medium truncate">{item.text}</p>
+        <p className="font-medium truncate text-wrap">{item.text}</p>
         <p className="text-xs text-muted-foreground">
           {new Date(item.createdAt).toLocaleString()}
         </p>
